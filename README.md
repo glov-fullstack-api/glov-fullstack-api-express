@@ -90,6 +90,42 @@ curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app"
 
 ---
 
+## How To Install and Run The Project
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/glov-fullstack-api/glov-fullstack-api-express.git
+```
+
+
+### 2. Setup Node.js version
+
+This project built with Node.js version `20.5.0`. To use the same version for seamless development, you can use [NVM]((https://github.com/nvm-sh/nvm#installation-and-update)).
+
+Once NVM is installed, navigate to project directory and run the following command to automatically switch to the required Node.js version:
+
+```bash
+nvm use
+```
+
+To verify that you have the correct version of Node.js installed, run the following command:
+
+```bash
+node --version
+```
+
+### 3. Install the dependencies
+```bash
+npm install
+```
+
+### 4. Run the project
+```bash
+npm start
+```
+---
+
 ## Technologies Used
 
 - [typescript](https://www.npmjs.com/package/typescript)
@@ -99,6 +135,8 @@ curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app"
 - [cors](https://www.npmjs.com/package/cors)
 - [ts-jest](https://www.npmjs.com/package/ts-jest)
 - [ts-node](https://www.npmjs.com/package/ts-node)
+
+---
 
 ## Contact
 
