@@ -78,7 +78,8 @@ curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app?stream=f
 ### 4. Requests without `stream` parameter
 
 ```sh
-curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app"
+curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app" \
+-H "Authorization: Bearer USER222"
 ```
 
 ```json
