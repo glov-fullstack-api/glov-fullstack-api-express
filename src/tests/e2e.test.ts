@@ -70,3 +70,33 @@ describe("Authorization Tests", () => {
     expect(response.status).toBe(429);
   });
 });
+
+describe('Rate limit reset', () => {
+  afterAll(() => {
+    server.close();
+  });
+
+  it('should reset the rate limit after 1 minute', async () => {
+    jest.useFakeTimers();
+
+    const res1 = await request(server)
+      .get('/') 
+      .set('Authorization', 'Bearer USER222') 
+      .query({ stream: 'false' })
+      .expect(200);
+
+    expect(res1.body).toHaveProperty('rate_limit_left', 3);
+
+    jest.advanceTimersByTime(70000);
+
+    const res2 = await request(server)
+      .get('/')
+      .set('Authorization', 'Bearer USER222') 
+      .query({ stream: 'false' })
+      .expect(200); 
+
+    expect(res2.body).toHaveProperty('rate_limit_left', 3);
+
+    jest.useRealTimers()
+  });
+});
