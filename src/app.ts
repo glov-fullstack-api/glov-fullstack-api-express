@@ -17,12 +17,6 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
   const stream = req.query.stream;
   const userId = res.locals.userId as string;
 
-  if (!stream) {
-    return res
-      .status(400)
-      .json({ status: 400, body: "stream parameter is required" });
-  }
-
   const visitCount = (userVisits.get(userId) || 0) + 1;
   userVisits.set(userId, visitCount);
 
@@ -39,7 +33,7 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
       const payload: ResponsePayload = {
         message: `Welcome USER_${userId}, this is your visit #${visitCount}`,
         group,
-        rate_limit_left: 3 - ((visitCount - 1) % 4),
+        rate_limit_left: res.locals.rate_limit_left,
         stream_seq: i + 1,
       };
 
@@ -54,7 +48,7 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
   const payload: ResponsePayload = {
     message: `Welcome USER_${userId}, this is your visit #${visitCount}`,
     group,
-    rate_limit_left: 3 - ((visitCount - 1) % 4),
+    rate_limit_left: res.locals.rate_limit_left,
     stream_seq: 0,
   };
 

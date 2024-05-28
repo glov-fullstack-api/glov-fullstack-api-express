@@ -17,15 +17,19 @@ export function rateLimit(_: Request, res: Response, next: NextFunction) {
   const { timestamps, lastReset } = requestCounts.get(userId)!;
 
   if (currentTime - lastReset > timeWindow) {
-    requestCounts.set(userId, { timestamps: [], lastReset: currentTime });
+    requestCounts.delete(userId);
+    requestCounts.set(userId, { timestamps: [currentTime], lastReset: currentTime });
+  } else {
+    timestamps.push(currentTime);
+    requestCounts.set(userId, { timestamps, lastReset });
   }
 
-  if (timestamps.length >= requestLimit) {
+  const rate_limit_left = requestLimit - requestCounts.get(userId)!.timestamps.length;
+
+  if (rate_limit_left < 0) {
     return res.status(429).json({ status: 429, body: "Rate Limit Exceeded" });
   }
 
-  timestamps.push(currentTime);
-  requestCounts.set(userId, { timestamps, lastReset });
-
+  res.locals.rate_limit_left = rate_limit_left;
   return next();
 }

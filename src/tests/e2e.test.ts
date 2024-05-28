@@ -8,8 +8,6 @@ describe("Authorization Tests", () => {
 
   it("should respond with 401 if no authorization token is provided", async () => {
     const response = await request(server).get("/").query({ stream: "true" });
-    console.log(response.statusCode);
-
     expect(response.status).toBe(401);
   });
 
