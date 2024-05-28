@@ -32,7 +32,7 @@ curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app?stream=f
 ### 2. Requests with `stream=true`
 
 ```sh
-curl -X GET "https://api.example.com/your-endpoint?stream=true" \
+curl -X GET "https://glov-fullstack-api-express-xwefxrs5fq-ew.a.run.app?stream=true" \
 -H "Authorization: Bearer USER222"
 ```
 
@@ -45,15 +45,15 @@ curl -X GET "https://api.example.com/your-endpoint?stream=true" \
   "stream_seq": 1
 }
 {
-  ...,
+  ..,
   "stream_seq": 2
 },
 {
-  ...,
+  ..,
   "stream_seq": 3
 },
 {
-  ...,
+  ..,
   "stream_seq": 4
 },
 ```
