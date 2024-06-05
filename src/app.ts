@@ -20,7 +20,13 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
   const visitCount = (userVisits.get(userId) || 0) + 1;
   userVisits.set(userId, visitCount);
 
-  const group = simpleHasher(+userId);
+  let group: number;
+
+  try {
+    group = simpleHasher(+userId);
+  } catch (error) {
+    return res.status(400).json({ status: 400, body: "Invalid user ID" });
+  }
 
   if (stream === "true") {
     res.writeHead(200, {
@@ -29,7 +35,7 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
       Connection: "keep-alive",
     });
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       const payload: ResponsePayload = {
         message: `Welcome USER_${userId}, this is your visit #${visitCount}`,
         group,
@@ -38,6 +44,8 @@ app.get("/", authenticate, rateLimit, async (req: Request, res: Response) => {
       };
 
       res.write(JSON.stringify(payload) + "\n\n");
+
+      if (i === 4) break;
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }

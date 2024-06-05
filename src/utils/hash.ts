@@ -1,5 +1,5 @@
 export const simpleHasher = (num: number) => {
-  if (num < 100 || num > 999) {
+  if (num < 0 || num > 999) {
     throw new Error("Number must be in the range 100 to 999 inclusive");
   }
 
